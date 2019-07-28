@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Nadir Absemetov">
+    <title>Интернет-магазин RZK Маркет Украина: электрофурнитура, розетки, выключатели, кабель, провод</title>
+    <meta name="description" content="M.rzk.com.ua - Ember.js | Интернет магазин RZK Маркет Украина. Электрофурнитура, розетки и выключатели, кабель, провод. Официальный представитель ТМ Viko и Gunsan. Доставка по всей Украине.">
+    <meta name="keywords" content="интернет, магазин, розетка, выключатель, кабель, провод, куплю, в Киеве, в Украине, Киев, Украина">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{content-for "head"}}
+
+    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link rel="stylesheet" href="{{rootURL}}assets/rzk-ember.css">
+
+    {{content-for "head-footer"}}
+  </head>
+  <body>
+    <div class="ember-load-indicator container h-100" style="position:fixed;top:0;left:0;right:0">
+      <div class="row h-100 justify-content-center align-items-center">
+        <img style="height:200px;" src="https://rzk.com.ru/img/rzk_market.gif" alt="RZK Маркет" title="RZK Маркет Крым">
+      </div>
+    </div>
+    {{content-for "body"}}
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script src="{{rootURL}}assets/rzk-ember.js"></script>
+    {{content-for "body-footer"}}
+  </body>
+</html>

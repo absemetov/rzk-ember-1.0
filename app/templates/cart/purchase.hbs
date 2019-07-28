@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row">
+		<div class="col-lg-8 offset-lg-2">
+		
+			<div class="card mt-3">
+			
+				<div class="card-header">
+			  		Оформление заказа
+			  	</div>
+		  	    
+				<div class="card-body">
+				  <div class="container">
+                    {{#bs-form formLayout="horizontal" model=model.order onSubmit=(action "save") as |form|}}
+
+                        {{form.element controlType="text" label="Фамилия" autofocus=true property="lastName" required=true}}
+        
+                        {{form.element controlType="text" label="Имя" property="firstName" required=true}}
+                        
+                        {{form.element controlType="text" label="Адрес" property="address" required=true}}
+        
+                        {{form.element controlType="tel" label="Моб. номер телефона" title="+380xx1234567" property="phoneNumber" pattern="^[\(\)\s-]*(((\+?[\(\)\s-]*3)?[\(\)\s-]*8)|(\+?[\(\)\s-]*7))?([\(\)\s-]*\d){10}[\(\)\s-]*$" required=true}}
+        
+                        {{#form.element label="Способ доставки" property="carrierId" useIcons=false as |el|}}
+                            {{#x-select value=el.value action="selectCarrierId" class="form-control" as |xs|}}
+                              {{#xs.option value=1}}Самовывоз со склада{{/xs.option}}
+                              {{#xs.option value=2}}Нова Пошта{{/xs.option}}
+                              {{#xs.option value=3}}Интайм{{/xs.option}}
+                            {{/x-select}}
+                        {{/form.element}}
+        
+                        {{form.element validation=carrierNumberValidation useIcons=false controlType="number" label="Номер отделения" placeholder="Номер склада перевозчика" property="carrierNumber"}}
+        
+                        {{#form.element label="Способ оплаты" property="paymentId" useIcons=false as |el|}}
+                            {{#x-select value=el.value action="selectPaymentId" class="form-control" as |xs|}}
+                              {{#xs.option value=1}}Наложенный платеж (оплата на складе){{/xs.option}}
+                              {{#xs.option value=2}}Перевод на карту ПриватБанка{{/xs.option}}
+                            {{/x-select}}
+                        {{/form.element}}
+                        
+                        {{form.element controlType="textarea" label="Комментарий" property="comment"}}
+        
+                        {{#unless session.isAuthenticated}}
+                            {{form.element controlType="email" label="Отправить данные заказа на E-Mail" property="email"}}
+                        {{/unless}}
+                        
+                        {{#form.group}}
+                            <div class="offset-sm-4 col-sm-8">
+                              {{bs-button type="primary" buttonType="submit" defaultText="Подтвердить заказ" textState=buttonState loadingText="Подождите..." disabled=disabledButton}}
+                            </div>
+                        {{/form.group}}
+        
+                    {{/bs-form}}
+                    
+                    {{#if model.order.errors.messages}}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {{#each model.order.errors.messages as |message|}}
+                                  <li>{{message}}</li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/if}}
+                  </div>
+				</div>
+			 
+			</div>
+		
+		</div>
+	</div>
+</div>

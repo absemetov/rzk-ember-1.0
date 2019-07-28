@@ -1,0 +1,31 @@
+{{#bs-modal onSubmit=(action "buyItem") open=openModel onHide=(action "closeModal") onShow=(action "selectModal") fade=false as |modal|}}
+  {{#modal.header}}
+     <h6 class="modal-title">{{modalData.name}} ({{modalData.id}})</h6>
+  {{/modal.header}}
+  {{#modal.body}}
+    {{#bs-form formLayout="vertical" onSubmit=(action "buyItem") as |form|}}
+      <div class="form-group">
+        <div class="input-group">
+          {{input type="number" class="form-control my-input" value=modalCount autofocus=true min=0 max=10000 placeholder="Введите количество товара"}}
+          <div class="input-group-append">
+            <span class="input-group-text" id="name_unit">{{modalData.unit}}</span>
+          </div>
+        </div>
+      </div>
+      
+      <p id="passwordHelpBlock" class="form-text text-muted">
+        Цена: <strong>{{modalData.price}} грн</strong>
+        Сумма: <strong>{{format-currency total}} грн</strong>
+      </p>
+      <input type="submit" style="position: absolute; left: -9999px" id="form_submit">
+    {{/bs-form}}
+  {{/modal.body}}
+  {{#modal.footer as |footer|}}
+     {{#if modalData.qty}}
+       {{#bs-button onClick=(action 'remove') type="secondary" class="w-50"}}Удалить{{/bs-button}}
+       {{#bs-button onClick=(action 'add') type="primary" class="w-50"}}Добавить{{/bs-button}}
+     {{else}}
+       {{#bs-button onClick=(action 'add') type="primary" class="btn-block"}}Добавить{{/bs-button}}
+     {{/if}}
+  {{/modal.footer}}
+{{/bs-modal}}

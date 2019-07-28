@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  {{#bs-nav type="pills" as |nav|}}
+   {{#nav.item}}
+      {{#nav.link-to 'fire-carts'}}
+        Корзины
+      {{/nav.link-to}}
+   {{/nav.item}}
+   {{#nav.item}}
+      {{#nav.link-to 'fire-products'}}
+        ТОП-100
+      {{/nav.link-to}}
+   {{/nav.item}}
+  {{/bs-nav}}
+  
+  {{#bs-dropdown class="mt-3" as |dd|}}
+    {{#dd.button}}
+      {{#if (eq orderBy 'qty')}}
+        Сортировать по количеству продаж
+      {{else}}
+        Сортировать по количеству заказов
+      {{/if}}
+      <span class="caret"></span>
+    {{/dd.button}}
+    {{#dd.menu as |ddm|}}
+      <a {{action 'toggleSort' 'qty'}} class="dropdown-item">Сортировать по количеству продаж</a>
+      <a {{action 'toggleSort' 'orders'}} class="dropdown-item">Сортировать по количеству заказов</a>
+    {{/dd.menu}}
+  {{/bs-dropdown}}
+  
+  <div class="card-deck">
+    {{#each sortedGoods as |product|}}
+      {{fire-top100-list product=product}}
+    {{/each}}
+  </div>
+</div>

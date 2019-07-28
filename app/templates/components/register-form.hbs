@@ -1,0 +1,29 @@
+{{#bs-form formLayout="horizontal" model=user onSubmit=(action "submit") as |form|}}
+    
+    {{form.element validation=lastnameValidation useIcons=false controlType="text" label="Фамилия" placeholder="Фамилия" autofocus=true property="lastName" required=true}}
+
+    {{form.element validation=firstnameValidation useIcons=false controlType="text" label="Имя" placeholder="Имя" property="firstName" required=true}}
+
+    {{form.element validation=telValidation useIcons=false controlType="tel" label="Мобильный номер" placeholder="Мобильный номер" title="+380xx1234567" property="phoneNumber" required=true pattern="^[\(\)\s-]*(((\+?[\(\)\s-]*3)?[\(\)\s-]*8)|(\+?[\(\)\s-]*7))?([\(\)\s-]*\d){10}[\(\)\s-]*$"}}
+
+    {{form.element validation=emailValidation useIcons=false controlType="email" label="Email" placeholder="Email" property="email" required=true}}
+
+    {{form.element validation=passwordValidation useIcons=false controlType="password" label="Пароль" placeholder="Пароль" property="password" required=true}}
+
+    {{#form.group}}
+        <div class="offset-sm-4 col-sm-8">
+          {{bs-button type="primary" buttonType="submit" defaultText="Регистрация" textState=buttonState loadingText="Подождите..."}}
+        </div>
+    {{/form.group}}
+    
+{{/bs-form}}
+
+{{#if user.errors.messages}}
+    <div class="alert alert-danger">
+        <ul>
+            {{#each user.errors.messages as |message|}}
+              <li>{{message}}</li>
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}

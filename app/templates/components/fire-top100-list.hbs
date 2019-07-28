@@ -1,0 +1,23 @@
+{{#link-to 'product' product.id (query-params tag=activeTags path=path)}}
+  <img style="height: 200px;" class="img-fluid" src="{{product.image_url}}" onerror="this.src = 'http://rzk.com.ua/img/rzk_market_default.png';" alt="RZK Маркет" title="{{product.name}}">
+{{/link-to}}
+<div class="card-body mt-3">
+  <p class="card-text">
+    <h5>
+        {{#link-to 'product' product.id}}
+          {{product.name}}
+        {{/link-to}}
+    </h5>
+  </p>
+  <h6 class="card-subtitle mb-2 text-muted">
+     {{product.id}}
+  </h6>
+</div>
+<div class="card-footer">
+  <h3>{{format-currency product.price}} <small class="text-muted">{{cart.shopCurrency}}</small></h3>
+  <h5>Продали: <strong>{{if product.qty product.qty "0"}}</strong> {{product.unit}} (<strong>{{if product.orders product.orders "0"}}</strong>)</h5>
+  {{#if product.timestamp}}
+    <h4><small class="text-muted">{{ moment-from-now product.timestamp interval=1000 }}</small></h4>
+  {{/if}}
+  {{#link-to 'product' product.id class="btn btn-primary btn-block"}}Купить{{/link-to}}
+</div>

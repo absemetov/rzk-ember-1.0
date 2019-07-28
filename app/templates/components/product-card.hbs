@@ -1,0 +1,62 @@
+{{#if compact}}
+  <div class="d-flex align-items-center align-self-center" style="height: 255px;">
+  {{#link-to 'product' product.id}}
+    <img style="{{product.imageStyle}}" class="img-fluid" src="{{product.imageUrl250}}" onerror="this.src = 'https://i1.rzk.com.ua/default/250_default_img.png';" alt="RZK Маркет" title="{{product.name}}">
+  {{/link-to}}
+  </div>
+{{else}}
+  <div class="d-flex align-items-center align-self-center" style="height: 255px;">
+  <a href="{{product.imageUrl800}}" {{action "magnific" product.imageUrl800 product.photos product.name}}>
+    <img style="{{product.imageStyle}}" class="img-fluid" src="{{product.imageUrl250}}" onerror="this.src = 'https://i1.rzk.com.ua/default/250_default_img.png';" alt="RZK Маркет" title="{{product.name}}">
+  </a>
+  </div>
+  {{#if product.photos}}
+    <ul class="nav justify-content-center mt-3">
+      {{#each product.photos as |photo|}}
+        <li class="nav-item">
+          <a href="{{photo.img800}}" class="gallery-item" {{action "magnific" photo.img800 product.photos product.name product.imageUrl800}}>
+            <img class="img-thumbnail" src="{{photo.img64}}" alt="RZK Маркет"   title="{{product.name}}">
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+{{/if}}
+<div class="card-body">
+  {{#if product.brandName}}
+    <h4 class="card-title">
+      {{#link-to 'brand.show' product.brandUrl}}
+        {{product.brandName}}
+      {{/link-to}}
+    </h4>
+  {{/if}}
+  <h5>
+    {{#if compact}}
+      {{#link-to 'product' product.id}}{{product.name}}{{/link-to}}
+    {{else}}
+      {{product.name}}
+    {{/if}}
+    <small class="text-muted">({{ product.id }})</small>
+  </h5>
+</div>
+<div class="card-footer">
+  <h3>{{format-currency product.price}} <small class="text-muted">грн</small></h3>
+  <h5>
+    <small class="text-muted">
+      Склад: {{product.warehouse}}
+    </small>
+  </h5>
+  {{#if qtyCart}}
+    <button type="button" role="button" class="btn btn-success btn-block">{{qtyCart}} {{product.unit}} {{format-currency product.totalByCountOrder}} грн</button>
+  {{else}}
+    {{#if (and product.instock product.price)}}
+        {{#if product.qty}}
+          <button type="button" role="button" {{action 'openModal' product}} class="btn btn-success btn-block">{{product.qty}} {{product.unit}} {{format-currency product.total}} грн</button>
+        {{else}}
+          <button type="button" role="button" {{action 'openModal' product}} class="btn btn-primary btn-block">Добавить товар</button>
+        {{/if}}
+    {{else}}
+        <button type="button" class="btn btn-primary btn-block disabled">Нет в наличии</button>
+    {{/if}}
+  {{/if}}
+</div>

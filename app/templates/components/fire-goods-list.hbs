@@ -1,0 +1,10 @@
+{{#each sortedReviews as |item index|}}
+  <tr>
+    <td style="width:2%;">{{ list-item index }}</td>
+    <td style="width:10%;"><strong>{{ item.product.id }}</strong></td>
+    <td style="width:52%;">{{#link-to 'product' item.product.id}} {{if item.product.name item.product.name 'RZK Маркет'}} {{/link-to}}</td>
+    <td style="width:12%;"><strong>{{item.qty}}</strong> {{item.product.unit}}</td>
+    <td style="width:12%;"><strong>{{format-currency item.price}}</strong> {{cart.shopCurrency}}</td>
+    <td style="width:12%;"><strong>{{format-currency item.total}}</strong> {{cart.shopCurrency}}</td>
+  </tr>
+{{/each}}

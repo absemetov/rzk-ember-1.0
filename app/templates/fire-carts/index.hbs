@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  {{#bs-nav type="pills" as |nav|}}
+   {{#nav.item}}
+      {{#nav.link-to 'fire-carts'}}
+        Корзины
+      {{/nav.link-to}}
+   {{/nav.item}}
+   {{#nav.item}}
+      {{#nav.link-to 'fire-products'}}
+        ТОП-100
+      {{/nav.link-to}}
+   {{/nav.item}}
+  {{/bs-nav}}
+
+  {{#each sortedModel as |cartFire|}}
+    <div class="card mt-3">
+      <div class="card-header">
+        {{#if currentUser.user.admin}}
+          <button {{action 'deleteCart' cartFire}}>Delete</button>
+        {{/if}}
+        
+        {{#link-to 'fire-carts.cart' cartFire.id}}{{ moment-from-now cartFire.timestamp interval=1000 }}{{/link-to}}
+        
+        {{#if cartFire.ordered}}
+            <span class="badge badge-danger">Заказ оформлен</span>                
+        {{/if}}
+        {{#if cartFire.shared}}
+          <span class="badge badge-success">Корзиной поделились</span>                
+        {{/if}}
+      </div>
+      <table class="table table-hover table-bordered table-responsive mb-0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Код товара</th>
+              <th>Наименование</th>
+              <th>Количество</th>
+              <th>Цена</th>
+              <th>Сумма</th>
+            </tr>
+          </thead>
+          
+          {{fire-goods-list goods=cartFire.items}}
+          
+      </table>
+      <div class="card-footer">
+          Сумма: <strong>{{format-currency cartFire.total}}</strong> {{cart.shopCurrency}}
+          {{#link-to 'share-cart' cartFire.id}}Загрузить корзину{{/link-to}}
+      </div>
+    </div>
+    {{else}}
+          Корзины пока не заполнены
+    {{/each}}
+</div>

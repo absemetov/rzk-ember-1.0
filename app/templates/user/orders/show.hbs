@@ -1,0 +1,118 @@
+<div class="container-fluid">
+	<div class="card mt-3">
+		<div class="card-header">
+	  	  {{#link-to 'user.orders'}}Мои заказы{{/link-to}} => <strong>Заказ #{{model.id}}</strong>
+	  	</div>
+		  <table class="table table-hover table-bordered table-responsive">
+		      <tr>
+		          <td style="width:20%;">
+	                <strong>Статус заказа</strong>
+		          </td>
+		          <td style="width:80%;">
+		          	 {{order-status statusId=model.statusId}}
+	                 {{moment-from-now model.createdAt interval=1000}}
+		          </td>
+			  </tr>
+			  <tr>
+		          <td>
+	                <strong>Фамилия, имя</strong>
+		          </td>
+		          <td>
+		            <strong>{{model.lastName}} {{model.firstName}}</strong>
+		          </td>
+			  </tr>
+			  <tr>
+		          <td>
+	                <strong>Телефон</strong>
+		          </td>
+		          <td>
+		            <strong>{{model.phoneNumber}}</strong>
+		          </td>
+			  </tr>
+			  <tr>
+		          <td>
+	                <strong>Доставка и оплата</strong>
+		          </td>
+		          <td>
+		            <strong>
+		            	{{model.address}}, {{model.carrierName}}, {{model.paymentName}}
+	            	</strong>
+		          </td>
+			  </tr>
+			  
+			  <tr>
+		          <td>
+	                <strong>Номер ТТН:</strong>
+		          </td>
+		          <td>
+		            <strong>{{model.cargoNumber}}</strong>
+		          </td>
+			  </tr>
+			  <tr>
+		          <td>
+	                <strong>Сумма</strong>
+		          </td>
+		          <td>
+		            <strong>{{model.total}} грн</strong>
+		          </td>
+			  </tr>
+			  {{#if model.comment}}
+				  <tr>
+			          <td>
+		                <strong>Комментарий</strong>
+			          </td>
+			          <td>
+			            <strong>{{model.comment}}</strong>
+			          </td>
+				  </tr>
+			  {{/if}}
+		    </table>
+
+	    <table class="table table-hover table-bordered table-responsive mb-0">
+			<thead>
+			  <tr>
+			  	<th>#</th>
+	            <th>Код товара</th>
+	            <th>Наименование</th>
+	            <th>Количество</th>
+	            <th>Цена</th>
+	            <th>Сумма</th>
+	          </tr>
+			</thead>
+			<tbody>
+				{{#each model.lineItems as |product index|}}
+	                <tr>
+	                  <td style="width:2%;">{{ list-item index }}</td>
+			          <td style="width:10%;">
+		                {{product.id}}
+			          </td>
+			          <td style="width:52%;">
+			          	{{#link-to 'product' product.id}}
+			              {{product.name}}
+			            {{/link-to}}
+			            <span class="text-muted">(Склад: {{product.warehouse}})</span>
+			          </td>
+			          <td style="width:12%;">{{product.countOrder}} {{product.unit}}</td>
+			          <td style="width:12%;">
+			            {{product.price}} грн
+			          </td>
+			          <td style="width:12%;">
+			            {{product.totalByCountOrder}} грн
+			          </td>
+			          
+			        </tr>
+	            {{/each}}
+			  <tr>
+		        <td colspan="6">
+		          Всего наименований <strong>{{cartGoodsCount.length}}</strong>, количество <strong>{{countGoods}}</strong>
+		        </td>
+			  </tr>
+			  <tr>
+		        <td colspan="6" class="success">
+		           Cумма <strong>{{model.total}} грн</strong>
+		        </td>
+			  </tr>
+		    </tbody>
+		  </table>
+	</div>
+</div>

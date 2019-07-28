@@ -1,0 +1,57 @@
+<div class="container-fluid">
+  {{#if model}}
+  <div class="card mt-3">
+	  <div class="card-header">
+  	  Ваши заказы
+  	</div>
+
+    <table class="table table-hover table-bordered table-responsive mb-0">
+      <thead>
+		  <tr>
+            <th>Номер заказа</th>
+            <th>Статус</th>
+            <th>Дата оформления</th>
+            <th>Получатель</th>
+            <th>Номер телефона</th>
+            <th>Сумма</th>
+          </tr>
+	  </thead>
+	  <tbody>
+	    {{#each model as |order|}}
+		  <tr>
+		    <td style="width:15%;">
+		      {{#link-to 'user.orders.show' order.id}}
+		         {{order.id}}
+		      {{/link-to}}
+		    </td>
+		    <td style="width:10%;">
+		      {{order-status statusId=order.statusId}}
+		    </td>
+		    <td style="width:15%;">
+		      {{#link-to 'user.orders.show' order.id}}
+		        {{moment-from-now order.createdAt interval=1000}}
+		      {{/link-to}}
+		    </td>
+		    <td style="width:20%;">
+		      {{#link-to 'user.orders.show' order.id}}
+		        {{order.lastName}} {{order.firstName}}
+		      {{/link-to}}
+		    </td>
+		    <td style="width:20%;">
+		       {{ order.phoneNumber }}
+		    </td>
+		    <td style="width:20%;">
+		      <strong>{{order.total}} грн</strong>
+		    </td>
+		  </tr>
+	    {{/each}}
+	  </tbody>
+	</table>
+  </div>
+    <center class="mt-3">
+      {{infinity-loader infinityModel=model loadingText="Загрузка..." loadedText=""}}
+    </center>
+  {{else}}
+    <p class="lead mt-3">У Вас нет пока заказов</p>
+  {{/if}}
+</div>

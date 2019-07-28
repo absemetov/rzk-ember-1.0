@@ -1,0 +1,12 @@
+{
+  "name": "rzk-ember",
+  "dependencies": {
+    "ember": "~2.11.0",
+    "ember-cli-shims": "~0.1.1",
+    "font-awesome": "fontawesome#^4.7.0",
+    "firebase": "^3.0.0",
+    "blob-polyfill": "^1.0.20150320",
+    "algolia-autocomplete.js": "^0.28.0",
+    "algoliasearch": "^3.22.1"
+  }
+}

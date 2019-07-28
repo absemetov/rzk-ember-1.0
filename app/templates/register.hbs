@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card mt-3">
+                <div class="card-header">Регистрация</div>
+                <div class="card-body">
+                    <div class="container">
+                        {{register-form user=model triggerSave=(action "save") errorMessage=errorMessage buttonState=buttonState userHasEnteredData=userHasEnteredData}}
+                    
+                        {{#bs-alert type="danger" visible=notifyVisible}}
+                           <strong>{{notifyMessage}}</strong>
+                        {{/bs-alert}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

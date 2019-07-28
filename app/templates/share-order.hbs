@@ -1,0 +1,63 @@
+<div class="container-fluid">
+	<h5>{{model.lastName}} {{model.firstName}} ваш заказ
+	{{#if session.isAuthenticated}}
+              
+      {{#if currentUser.user}}
+        {{#if currentUser.user.admin}}
+          <a href="https://rzk.com.ua/order/{{model.id}}/edit">#{{model.id}}</a>
+        {{/if}}
+      {{/if}}
+    
+    {{else}}
+      #{{model.id}}
+    {{/if}}
+	принят в обработку {{moment-from-now model.createdAt interval=1000}} {{order-status statusId=model.statusId}}
+	{{#if model.cargoNumber}} Номер ТТН: {{model.cargoNumber}} {{/if}}</h5>
+	  <table class="table table-hover table-bordered table-responsive">
+		<thead>
+		  <tr>
+		  	<th>#</th>
+	        <th>Код товара</th>
+	        <th>Наименование</th>
+	        <th>Количество</th>
+	        <th>Цена</th>
+	        <th>Сумма</th>
+	      </tr>
+		</thead>
+		<tbody>
+		    {{#each model.lineItems as |product index|}}
+	            <tr>
+	              <td>{{ list-item index }}</td>
+	              <td>
+	              	<label>
+		              <input type="checkbox"> <strong>{{product.id}}</strong>
+		            </label>
+		          </td>
+		          <td>
+		            {{#link-to 'product' product.id}}
+		              {{product.name}}
+		            {{/link-to}}
+		            <span class="text-muted">(Склад: {{product.warehouse}})</span>
+		          </td>
+		          <td>{{product.countOrder}} {{product.unit}}</td>
+		          <td>
+		            {{product.price}} грн
+		          </td>
+		          <td>
+		            {{product.totalByCountOrder}} грн
+		          </td>
+		        </tr>
+	        {{/each}}
+	        <tr>
+	        	<td colspan="6">
+	             Всего наименований <strong>{{cartGoodsCount.length}}</strong>, количество <strong>{{countGoods}}</strong>
+			    </td>
+			</tr>
+			<tr>
+	        	<td colspan="6">
+	             Cумма <strong>{{model.total}}</strong> грн
+			    </td>
+			</tr>
+	    </tbody>
+	  </table>
+</div>

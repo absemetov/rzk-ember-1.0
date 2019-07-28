@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+        	<div class="panel panel-success">
+        	
+        		<div class="panel-heading">
+        	  		Основные данные
+        	  	</div>
+          	
+        		<div class="panel-body">
+        		   
+        		    {{edit-account-form user=model redirectToUsers=(action 'redirect')}}
+        		  
+                </div>
+        	
+        	</div>
+
+        	{{#unless model.admin}}  
+    	        <div class="panel panel-success">
+            	
+            		<div class="panel-heading">
+            	  		Удалить аккаунт
+            	  	</div>
+              	    
+            		<div class="panel-body">
+            		  
+            		    {{delete-account-form user=model redirectToUsers=(action 'redirect')}}
+            		  
+            		</div>
+            	
+            	</div>
+        	{{/unless}}
+        	
+        	{{#if model.countOrders}}
+        	  {{#link-to 'orders' (query-params q=(concat 'user:' model.id) page=1)}}Заказы ({{model.countOrders}}) {{/link-to}}
+        	{{/if}}
+
+        </div>
+    </div>
+</div>

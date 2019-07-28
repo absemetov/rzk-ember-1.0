@@ -1,0 +1,182 @@
+<div class="wrapper">
+    {{ember-load-remover}}
+    
+    {{loading-slider isLoading=loading expanding=true duration=400}}
+
+    {{#bs-navbar position="fixed-top" as |navbar|}}
+      
+      {{#link-to 'index' invokeAction="hideMenu" class="navbar-brand"}}
+        <img src="//rzk.com.ua/img/rzk_brand_logo.png" width="30" height="30" class="d-inline-block align-top" alt="RZK Маркет Украина">
+        RZK Маркет Украина
+      {{/link-to}}
+
+      {{navbar.toggle onClick=(action "toggleMenu")}}
+
+      {{#navbar.content collapsed=collapsed}}
+      
+          {{#bs-form  class="form-inline my-2 my-lg-0 mr-auto" as |form|}}
+            
+            {{algolia-search onSubmit=(action "searchGoods") myParam=myParam}}
+            
+          {{/bs-form}}
+
+        {{#navbar.nav as |nav|}}
+          
+          {{#nav.item}}
+            {{#nav.link-to "cart" invokeAction="hideMenu"}}
+              <strong>
+                <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                Корзина
+                {{format-currency shoppingCart.info.total}} грн ({{shoppingCart.info.count}})
+              </strong>
+            {{/nav.link-to}}
+          {{/nav.item}}
+          
+          {{#if session.isAuthenticated}}
+              
+              {{#if currentUser.user}}
+                {{#nav.dropdown as |dd|}}
+                  {{#dd.toggle}}{{currentUser.user.firstName}} <span class="caret"></span>{{/dd.toggle}}
+                  
+                  {{#dd.menu align='right' as |ddm|}}
+                    
+                    {{#if currentUser.user.admin}}
+ 
+                    {{/if}}
+                    
+                    {{#link-to "user.orders" class="dropdown-item" invokeAction="hideMenu" activeClass=""}}Мои заказы{{/link-to}}
+                    {{#link-to "user.profile" class="dropdown-item" invokeAction="hideMenu" activeClass=""}}Мои данные{{/link-to}}
+                    {{ddm.divider}}
+                    <a {{action 'invalidateSession'}} class="dropdown-item"><i class="fa fa-btn fa-sign-out"></i>Выйти</a>
+                  {{/dd.menu}}
+                {{/nav.dropdown}}
+              {{/if}}
+            
+          {{else}}
+            
+                {{#nav.item}}
+                  {{#nav.link-to "login" (query-params r=null) invokeAction="hideMenu"}}Войти{{/nav.link-to}}
+                {{/nav.item}}
+                {{#nav.item}}
+                  {{#nav.link-to "register" (query-params r=null) invokeAction="hideMenu"}}Регистрация{{/nav.link-to}}
+                {{/nav.item}}
+
+          {{/if}}
+          
+        {{/navbar.nav}}
+        
+      {{/navbar.content}}
+      
+    {{/bs-navbar}}
+    
+    {{outlet}}
+    <div class="push"></div>
+	  
+</div>
+  
+
+<!-- The content of your page would go here. -->
+<div class="footer">
+	<footer class="footer-distributed">
+
+		<div class="footer-left">
+
+			<h3>RZK Маркет <span>Украина Ember.js</span></h3>
+
+			<p class="footer-links">
+				<a href="http://rzk.com.ua">Laravel версия</a>
+				·
+				{{#link-to 'sale.show' 'payments-and-deliveries'}}Доставка и оплата{{/link-to}}
+				·
+				{{#link-to 'sale.show' 'exchange-and-refund'}}Обмен и возврат{{/link-to}}
+				·
+				{{#link-to "fire-carts"}}Что сейчас покупают?{{/link-to}}
+			</p>
+
+			<p class="footer-company-name">RZK-Ember.js v.1.0.0 &copy; {{year}} <a href="http://absemetov.org.ua">Nadir Absemetov</a></p>
+		</div>
+
+		<div class="footer-center">
+		  
+			<div>
+		    <i class="fas fa-phone"></i>
+		    <p><a href="tel:+380-44-338-0164">+380 (44) 338 01 64</a></p>
+	    </div>
+    
+	    <div>
+        <i class="fas fa-phone"></i>
+        <p><a href="tel:+380-68-549-4100">+380 (68) 549 41 00</a></p>
+      </div>
+
+      <div>
+        <i class="fas fa-phone"></i>
+        <p><a href="tel:+380-63-997-2224">+380 (63) 997 22 24</a></p>
+      </div>
+
+      <div>
+		    <i class="fas fa-phone"></i>
+		    <p><a href="tel:+380-94-500-7264">+380 (94) 500 72 64</a></p>
+	    </div>
+
+      <div>
+        <i class="fas fa-phone"></i>
+        <p><a href="tel:+380-94-906-5164">+380 (94) 906 51 64</a></p>
+      </div>
+
+      <div>
+        <i class="fab fa-viber"></i>
+        <p><a {{action 'msgs'}}>Мессенджеры</a></p>
+      </div>
+      
+			<div>
+				<i class="far fa-envelope"></i>
+				<p><a href="mailto:rzk@rzk.com.ru">rzk@rzk.com.ua</a></p>
+			</div>
+
+		</div>
+
+		<div class="footer-right">
+
+			<p class="footer-company-about">
+				<span>О компании</span>
+				RZK Маркет Украина - это маркетплейс, здесь можно купить товары по выгодным ценам напрямую со склада.<br>
+				Мы полностью контролируем процесс обработки заказа.<br>
+				С нами легко, быстро и удобно!
+			</p>
+
+			<div class="footer-icons">
+
+				<a href="https://www.facebook.com/rzk.com.ua"><i class="fab fa-facebook-f"></i></a>
+				<a href="https://blog.rzk.com.ua"><i class="fab fa-medium-m"></i></a>
+
+			</div>
+
+		</div>
+
+	</footer>
+</div>
+
+{{#bs-modal open=msgsOpen onHide=(action "closeModal") as |modal|}}
+  {{#modal.header}}
+     <h6 class="modal-title">Мессенджеры</h6>
+  {{/modal.header}}
+  {{#modal.body}}
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+      	<a class="nav-link" href="viber://chat?number=79788986431" title="viber">Viber (79788986431)</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://api.whatsapp.com/send?phone=79788986431" title="whatsapp">Whatsapp (79788986431)</a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link" href="https://telegram.me/absemetov" title="telegram">Telegram (@absemetov)</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://m.me/absemetov" title="facebook-messenger">Messenger (@absemetov)</a>
+      </li>
+    </ul>
+  {{/modal.body}}
+  {{#modal.footer as |footer|}}
+     {{#bs-button onClick=(action modal.close)}}Закрыть{{/bs-button}}
+  {{/modal.footer}}
+{{/bs-modal}}

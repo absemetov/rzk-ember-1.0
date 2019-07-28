@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <h3 class="mt-3">Корзина</h3>
+  <div class="card-deck">
+    {{#each model as |product|}}
+      {{product-card product=product compact=true openModel=openModel modalData=modalData modalCount=modalCount}}
+    {{/each}}
+  </div>
+  {{#if model}}
+    <p class="lead mt-3">
+      Всего наименований <strong>{{shoppingCart.info.count}}</strong>,
+      количество <strong>{{shoppingCart.info.sumCount}}</strong>
+    </p>
+    <p class="lead">
+      <h4>Сумма: <strong>{{format-currency shoppingCart.info.total}}</strong> грн</h4>
+    </p>
+    
+    {{#link-to 'cart.checkout' class="btn btn-primary"}}Оформить заказ{{/link-to}}
+    <div class="mt-3">
+    {{#bs-dropdown as |dd|}}
+        {{#dd.button}}
+          Корзина
+          <span class="caret"></span>
+        {{/dd.button}}
+        {{#dd.menu as |ddm|}}
+            <a {{action 'share'}} class="dropdown-item">Поделиться</a>
+            <a href="http://rzk.com.ua/api/fire/product" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('format').value = 'xlsx'; document.getElementById('share-cart').submit();">
+              Сохранить в формате Excel2007 (xlsx)
+            </a>
+            <a href="http://rzk.com.ua/api/fire/product" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('format').value = 'xls'; document.getElementById('share-cart').submit();">
+              Сохранить в формате Excel5 (xls)
+            </a>
+            <form id="share-cart" action="https://rzk.com.ua/api/fire/product" method="POST" style="display: none;">
+                <input type="hidden" name="cart_json" value="{{shoppingCart.info.jsonIdQty}}">
+                <input type="hidden" name="total" value="{{shoppingCart.info.total}}">
+                <input type="hidden" name="format" id="format">
+            </form>
+            {{ddm.divider}}
+            <a {{action 'clear'}} class="dropdown-item">Очистить корзину</a>
+        {{/dd.menu}}
+    {{/bs-dropdown}}
+    </div>
+  {{else}}
+    <p class="lead mt-3">
+      Корзина пуста {{#link-to 'catalogs'}}Выбрать товары{{/link-to}}
+    </p>
+  {{/if}}
+</div>
+
+{{modal-goods openModel=openModel modalData=modalData modalCount=modalCount cartPage=true model=model}}
+
+{{#bs-modal open=shareCart onHide=(action "closeModal") onShown=(action "selectModal") as |modal|}}
+  {{#modal.header}}
+     <h6 class="modal-title">Ссылка на копию вашей корзины</h6>
+  {{/modal.header}}
+  {{#modal.body}}
+    {{#if loading}}
+      Корзина копируется ...
+    {{else}}
+      {{#link-to 'share-cart' firebase_cart_id invokeAction="closeModal" class="share_link"}}https://m.rzk.com.ua/share-cart/{{firebase_cart_id}}{{/link-to}}
+      <div id="share_resalt"></div>
+    {{/if}}
+  {{/modal.body}}
+  {{#modal.footer as |footer|}}
+     {{#bs-button onClick=(action 'copy') type="primary"}}Копировать{{/bs-button}}
+     {{#bs-button onClick=(action modal.close)}}Закрыть{{/bs-button}}
+  {{/modal.footer}}
+{{/bs-modal}}

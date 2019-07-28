@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row">
+		<div class="col-lg-8 offset-lg-2">
+		
+			<div class="card mt-3">
+			
+				<div class="card-header">
+			  		Ваши данные
+			  	</div>
+		  	
+				<div class="card-body">
+				    <div class="container">
+					  {{edit-account-form user=currentUser.user auth=true}}
+					</div>
+				</div>
+			
+			</div>
+		
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-8 offset-lg-2">
+		
+			<div class="card mt-3">
+			
+				<div class="card-header">
+			  		Изменить пароль
+			  	</div>
+		  	
+				<div class="card-body">
+				  <div class="container">
+					   {{password-account-form}}
+				  </div>
+				  
+				</div>
+			
+			</div>
+		
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-8 offset-lg-2">
+		
+			<div class="card mt-3">
+			
+				<div class="card-header">
+			  		Удалить аккаунт
+			  	</div>
+		  	
+				<div class="card-body">
+				  <div class="container">
+					  {{delete-account-form user=model auth=true}}
+				  </div>
+				  
+				</div>
+			
+			</div>
+		
+		</div>
+	</div>
+</div>

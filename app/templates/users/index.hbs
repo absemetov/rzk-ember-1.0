@@ -1,0 +1,45 @@
+<div class="row">
+
+	  {{input class='form-control' value=q enter="search"}}
+	  
+	  {{#if model}}	
+		  <div class="panel panel-success">
+				
+			    <div class="table-responsive">
+					  <table class="table">
+					      <thead>
+				          <tr>
+				            <th>Фамилия, Имя</th>
+				            <th>E-mail</th>
+				            <th>Телефон</th>
+				            <th>Адрес</th>
+				          </tr>
+				        </thead>
+				        <tbody>
+					    {{#each model as |user|}}
+					      <tr>
+						    <td>
+						      {{#link-to 'users.user' user}} {{ user.firstName }} {{ user.lastName }} {{/link-to}}
+						    </td>
+						    <td>
+						      {{ user.email }}
+						    </td>
+						    <td>
+						      {{ user.tel }}
+						    </td>
+						    <td>
+						      {{ user.address }}
+						    </td>
+						  </tr>
+					    {{/each}}
+					    </tbody>
+					  </table>
+				</div>
+	        </div>
+        
+          	{{page-paginate pagination = model.meta.pagination link_to='users'}}
+        
+        {{else}}
+		  	No data
+		{{/if}}
+</div>

@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card mt-3">
+                <div class="card-header">Войти</div>
+                <div class="card-body">
+                    <div class="container">
+                    {{#bs-form formLayout="horizontal" model=this onSubmit=(action "authenticate") as |form|}}
+                        {{form.element controlType="email" label="E-Mail Адрес" placeholder="Email" property="identification" autofocus=true required=true}}
+                           
+                        {{form.element controlType="password" label="Пароль" placeholder="Password" property="password" required=true}}
+  
+                        {{#form.group}}
+                            <div class="offset-sm-4 col-sm-8">
+                              {{bs-button type="primary" buttonType="submit" defaultText="Войти" disabled=disabledButton}}
+                              {{#link-to 'forgot-password' class="btn btn-link"}}Забыли пароль?{{/link-to}}
+                            </div>
+                        {{/form.group}}
+                        
+                    {{/bs-form}}
+                    
+                    {{#bs-alert type="danger" visible=notifyVisible}}
+                       <strong>{{notifyMessage}}</strong>
+                    {{/bs-alert}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

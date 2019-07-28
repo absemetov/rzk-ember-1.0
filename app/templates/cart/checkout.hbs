@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-6 offset-md-3">
+            {{#link-to 'login' (query-params r="purchase") class="btn btn-secondary btn-block btn-lg"}}Войти{{/link-to}}
+        
+            {{#link-to 'register' (query-params r="purchase") class="btn btn-secondary btn-block btn-lg"}}Регистрация{{/link-to}}
+        
+            {{#link-to 'cart.purchase' class="btn btn-success btn-block btn-lg"}}Продолжнить без регистрации{{/link-to}}
+        </div>
+    </div>
+</div>

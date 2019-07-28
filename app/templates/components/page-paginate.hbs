@@ -1,0 +1,35 @@
+{{#if hasPages}}
+    <ul class="pagination">
+        
+        {{#if onFirstPage}}
+            <li class="disabled"><span>&laquo;</span></li>
+        {{else}}
+            <li>{{#link-to (query-params page=previousPageUrl) rel="prev"}}&laquo;{{/link-to}}</li>
+        {{/if}}
+        
+        {{#each elements as |element|}}
+            
+            {{#if (is_string element)}}
+                <li class="disabled"><span>{{ element }}</span></li>
+            {{else}}
+            
+                {{#if (eq element pagination.current-page)}}
+                    <li class="active"><span>{{ element }}</span></li>
+                {{else}}
+                    <li>{{#link-to (query-params page=element) rel="prev"}}{{element}}{{/link-to}}</li>
+                {{/if}}
+                
+            {{/if}}
+            
+        {{/each}}
+    
+    
+        {{#if pagination.has-more-pages}}
+            <li>{{#link-to (query-params page=nextPageUrl) rel="prev"}}&raquo;{{/link-to}}</li>
+        {{else}}
+            <li class="disabled"><span>&raquo;</span></li>
+        {{/if}}
+    </ul>
+{{/if}}
+
+

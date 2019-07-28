@@ -1,0 +1,15 @@
+{{#bs-form formLayout="horizontal" model=user onSubmit=(action "delete") as |form|}}
+
+    {{form.element validation=emailValidation useIcons=false controlType="email" label="Для подтверждения, введите email" autofocus=true required=true property="emailDelete"}}
+
+    {{#form.group}}
+        <div class="offset-sm-4 col-sm-8">
+          {{bs-button type="primary" buttonType="submit" icon="fa fa-btn fa-user" defaultText="Удалить" textState=buttonState loadingText="Подождите..."}}
+        </div>
+    {{/form.group}}
+	    
+{{/bs-form}}
+
+{{#bs-alert type="danger" visible=notifyVisible}}
+  <strong>{{notifyMessage}}</strong>
+{{/bs-alert}}

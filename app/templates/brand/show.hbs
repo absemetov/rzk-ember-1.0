@@ -1,0 +1,32 @@
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-4 col-lg-3 col-xl-3">
+        <div class="card text-center mt-3">
+            {{#link-to 'brand.show' model.id}}
+              <img class="img-fluid" src="{{model.imageUrl}}" alt="{{model.name}}">
+            {{/link-to}}
+            <div class="card-body mt-3">
+               {{model.tagline}}
+            </div>
+            <div class="card-footer">
+              {{#link-to 'brand'}}Бренды{{/link-to}}
+              >
+              {{#link-to 'brand.show' model.id}}{{model.name}}{{/link-to}}
+            </div>
+        </div>
+        
+        <ul class="list-group mt-3">
+          {{#each model.catalogs as |catalog|}}
+              {{#link-to 'brand.catalog' model.id catalog.url class="list-group-item list-group-item-action"}}
+      	        {{catalog.name}}
+      	      {{/link-to}}
+    	    {{/each}}
+        </ul>
+      </div>
+
+      <div class="col-md-8 col-lg-9 col-xl-9 pt-3">
+  	  	 {{{model.description}}}
+      </div>
+
+    </div>
+</div>

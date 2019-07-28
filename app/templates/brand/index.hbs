@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-4 col-lg-3 col-xl-3">
+        <ul class="list-group mt-3">
+          {{#link-to 'sale' class="list-group-item list-group-item-action"}}
+            Акции, распродажи, новинки!
+          {{/link-to}}
+          {{#link-to 'brand' class="list-group-item list-group-item-action"}}
+            Бренды
+          {{/link-to}}
+        </ul>
+      </div>
+      <div class="col-md-8 col-lg-9 col-xl-9">
+        <div class="card-deck">
+          {{#each sortedBrands as |brand|}}
+            <div class="card text-center mt-3" style="min-width: 16rem;">
+              {{#link-to 'brand.show' brand.id}}
+                <img class="img-fluid" src="{{brand.imageUrl}}" alt="{{brand.name}}">
+              {{/link-to}}
+              <div class="card-body mt-3">
+                {{brand.tagline}}
+              </div>
+              <div class="card-footer">
+                {{#link-to 'brand.show' brand.id}}
+                  {{brand.name}}
+                {{/link-to}}
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+      
+  </div>
+</div>
